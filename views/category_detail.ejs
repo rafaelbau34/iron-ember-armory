@@ -1,0 +1,51 @@
+<%- include('partials/header', { title: title }) %>
+
+<div class="page-header">
+  <h1><%= category.name %></h1>
+  <div class="actions">
+    <a href="/categories/<%= category.id %>/update" class="btn btn-secondary">Edit Category</a>
+    <a href="/categories/<%= category.id %>/delete" class="btn btn-danger">Delete Category</a>
+  </div>
+</div>
+
+<p class="description-text"><%= category.description %></p>
+
+<div class="section-header">
+  <h2>Items in <%= category.name %></h2>
+  <a href="/items/create?category=<%= category.id %>" class="btn btn-primary btn-sm">Add Item</a>
+</div>
+
+<% if (items.length > 0) { %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Model #</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% items.forEach(item => { %>
+        <tr>
+          <td><a href="/items/<%= item.id %>"><%= item.name %></a></td>
+          <td><%= item.model_number %></td>
+          <td>$<%= item.price %></td>
+          <td>
+            <span class="badge <%= item.stock_qty > 0 ? 'badge-success' : 'badge-danger' %>">
+              <%= item.stock_qty %> in stock
+            </span>
+          </td>
+          <td>
+            <a href="/items/<%= item.id %>/update" class="btn btn-sm btn-secondary">Edit</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } else { %>
+  <p class="empty-state">No items in this category.</p>
+<% } %>
+
+<%- include('partials/footer') %>

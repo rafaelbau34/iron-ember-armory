@@ -1,0 +1,14 @@
+<%- include('partials/header', { title: title }) %>
+<div class="container">
+  <h1>An Error Occurred</h1>
+  <p class="error-msg"><%= error.message %></p>
+  <% if (error.message && (error.message.includes('ECONNREFUSED') || error.message.includes('password authentication failed') || error.message.includes('database') || error.message.includes('relation "categories" does not exist'))) { %>
+    <div class="alert alert-danger">
+      <strong>Database Connection Failed!</strong>
+      <p>Please ensure you have set a valid <code>DATABASE_URL</code> in your environment variables (Secrets panel).</p>
+      <p>Example: <code>postgres://user:password@host:port/dbname</code></p>
+      <p>Also, make sure to run the populate script or execute <code>db.sql</code> to create the tables.</p>
+    </div>
+  <% } %>
+</div>
+<%- include('partials/footer') %>

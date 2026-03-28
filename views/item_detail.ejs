@@ -1,0 +1,45 @@
+<%- include('partials/header', { title: title }) %>
+
+<div class="breadcrumb">
+  <a href="/categories/<%= item.category_id %>">&larr; Back to <%= item.category_name %></a>
+</div>
+
+<div class="item-detail-card">
+  <div class="item-header">
+    <h1><%= item.name %></h1>
+    <div class="actions">
+      <a href="/items/<%= item.id %>/update" class="btn btn-secondary">Edit</a>
+      <a href="/items/<%= item.id %>/delete" class="btn btn-danger">Delete</a>
+    </div>
+  </div>
+  
+  <div class="item-specs">
+    <div class="spec">
+      <span class="spec-label">Model Number</span>
+      <span class="spec-value"><%= item.model_number || 'N/A' %></span>
+    </div>
+    <div class="spec">
+      <span class="spec-label">Price</span>
+      <span class="spec-value price">$<%= item.price %></span>
+    </div>
+    <div class="spec">
+      <span class="spec-label">Stock Status</span>
+      <span class="spec-value">
+        <span class="badge <%= item.stock_qty > 0 ? 'badge-success' : 'badge-danger' %>">
+          <%= item.stock_qty %> Available
+        </span>
+      </span>
+    </div>
+    <div class="spec">
+      <span class="spec-label">Category</span>
+      <span class="spec-value"><a href="/categories/<%= item.category_id %>"><%= item.category_name %></a></span>
+    </div>
+  </div>
+  
+  <div class="item-description">
+    <h3>Description</h3>
+    <p><%= item.description || 'No description provided.' %></p>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

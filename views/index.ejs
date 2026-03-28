@@ -1,0 +1,21 @@
+<%- include('partials/header', { title: title }) %>
+
+<div class="page-header">
+  <h1>Categories</h1>
+  <a href="/categories/create" class="btn btn-primary">New Category</a>
+</div>
+
+<% if (categories.length > 0) { %>
+  <div class="grid">
+    <% categories.forEach(category => { %>
+      <div class="card">
+        <h2><a href="/categories/<%= category.id %>"><%= category.name %></a></h2>
+        <p><%= category.description %></p>
+      </div>
+    <% }) %>
+  </div>
+<% } else { %>
+  <p class="empty-state">No categories found. Add one to get started.</p>
+<% } %>
+
+<%- include('partials/footer') %>

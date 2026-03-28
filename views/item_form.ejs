@@ -1,0 +1,66 @@
+<%- include('partials/header', { title: title }) %>
+
+<h1><%= title %></h1>
+
+<% if (errors && errors.length > 0) { %>
+  <div class="alert alert-danger">
+    <ul>
+      <% errors.forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>
+
+<form method="POST" action="" class="form-container">
+  <div class="form-group">
+    <label for="name">Item Name:</label>
+    <input type="text" id="name" name="name" required value="<%= item.name || '' %>">
+  </div>
+  
+  <div class="form-group">
+    <label for="category_id">Category:</label>
+    <select id="category_id" name="category_id" required>
+      <option value="" disabled <%= !item.category_id ? 'selected' : '' %>>Select a category</option>
+      <% categories.forEach(category => { %>
+        <option value="<%= category.id %>" <%= item.category_id == category.id ? 'selected' : '' %>>
+          <%= category.name %>
+        </option>
+      <% }) %>
+    </select>
+  </div>
+  
+  <div class="form-row">
+    <div class="form-group half">
+      <label for="model_number">Model Number:</label>
+      <input type="text" id="model_number" name="model_number" value="<%= item.model_number || '' %>">
+    </div>
+    
+    <div class="form-group half">
+      <label for="price">Price ($):</label>
+      <input type="number" id="price" name="price" step="0.01" min="0" required value="<%= item.price || '' %>">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="stock_qty">Stock Quantity:</label>
+    <input type="number" id="stock_qty" name="stock_qty" min="0" required value="<%= item.stock_qty !== undefined ? item.stock_qty : 0 %>">
+  </div>
+  
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" rows="4"><%= item.description || '' %></textarea>
+  </div>
+  
+  <% if (title === 'Update Item') { %>
+    <div class="form-group admin-auth">
+      <label for="admin_password"><span class="lock-icon">🔒</span> Admin Password Required:</label>
+      <input type="password" id="admin_password" name="admin_password" required>
+    </div>
+  <% } %>
+  
+  <button type="submit" class="btn btn-primary">Save Item</button>
+  <a href="<%= item.id ? '/items/' + item.id : '/' %>" class="btn btn-secondary">Cancel</a>
+</form>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,37 @@
+<%- include('partials/header', { title: title }) %>
+
+<h1><%= title %>: <%= category.name %></h1>
+
+<% if (error) { %>
+  <div class="alert alert-danger">
+    <%= error %>
+  </div>
+<% } %>
+
+<% if (items.length > 0) { %>
+  <div class="alert alert-warning">
+    <strong>Warning:</strong> You must delete the following items before you can delete this category.
+  </div>
+  
+  <ul class="item-list">
+    <% items.forEach(item => { %>
+      <li><a href="/items/<%= item.id %>"><%= item.name %></a></li>
+    <% }) %>
+  </ul>
+  
+  <a href="/categories/<%= category.id %>" class="btn btn-secondary">Back to Category</a>
+<% } else { %>
+  <p>Are you sure you want to delete the category <strong><%= category.name %></strong>?</p>
+  
+  <form method="POST" action="" class="form-container">
+    <div class="form-group admin-auth">
+      <label for="admin_password"><span class="lock-icon">🔒</span> Admin Password Required:</label>
+      <input type="password" id="admin_password" name="admin_password" required>
+    </div>
+    
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a href="/categories/<%= category.id %>" class="btn btn-secondary">Cancel</a>
+  </form>
+<% } %>
+
+<%- include('partials/footer') %>
