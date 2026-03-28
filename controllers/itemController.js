@@ -180,6 +180,15 @@ exports.item_delete_get = async (req, res, next) => {
     const { rows } = await pool.query("SELECT * FROM items WHERE id = $1", [
       req.params.id,
     ]);
+
+    if (rows.length === 0) {
+      return res.redirect("/");
+    }
+    res.render("item_delete", {
+      title: "Delete Item",
+      item: rows[0],
+      error: null,
+    });
   } catch (err) {
     next(err);
   }

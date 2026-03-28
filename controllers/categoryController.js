@@ -59,7 +59,7 @@ exports.category_create_post = [
     const category = { name: req.body.name, description: req.body.description };
 
     if (!errors.isEmpty()) {
-      res.render("Category_form", {
+      res.render("category_form", {
         title: "Create Category",
         category,
         errors: errors.array(),
@@ -130,7 +130,7 @@ exports.category_update_post = [
         "UPDATE categories SET name = $1, description = $2 WHERE id = $3",
         [category.name, category.description, category.id],
       );
-      res.redirect("/categories/${category.id");
+      res.redirect(`/categories/${category.id}`);
     } catch (err) {
       next(err);
     }
@@ -187,7 +187,7 @@ exports.category_delete_post = async (req, res, next) => {
     }
 
     if (itemsRes.rows.length > 0) {
-      res.render("category_Delete", {
+      res.render("category_delete", {
         title: "Delete Category",
         category: categoryRes.rows[0],
         items: itemsRes.rows,
@@ -197,7 +197,7 @@ exports.category_delete_post = async (req, res, next) => {
       return;
     }
 
-    await pool.query[("DELETE FROM categories WHERE id = $1", [categoryId])];
+    await pool.query("DELETE FROM categories WHERE id = $1", [categoryId]);
     res.redirect("/");
   } catch (err) {
     next(err);
